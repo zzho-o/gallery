@@ -3,15 +3,13 @@ import * as Picker from "expo-image-picker";
 import { Image, Pressable, Text, StyleSheet, View } from "react-native";
 import { useRecoilState } from "recoil";
 import { atomImageUrl } from "../../utils/Recoil/atoms";
+import { apiEditor } from "../../utils/api/api";
 
 const ImagePicker = () => {
     const [uploadButtonPressed,setUploadButtonPressed] = useState(false)
-    // 현재 이미지 주소
     const [imageUrl, setImageUrl] = useRecoilState(atomImageUrl);
 
     const uploadImage = async () => {
-
-        // 이미지 업로드
         const result = await Picker.launchImageLibraryAsync({
             mediaTypes: Picker.MediaTypeOptions.Images,
             allowsEditing: false,
@@ -22,8 +20,21 @@ const ImagePicker = () => {
         if (result.canceled) {
             return null
         }
-
+        try {
+            const { data } = await apiEditor.getSignedUrl(file.uri.split('/').pop(), file.type);
+      
+            const uploadResult = await apiEditor.postPresignedUrlUpload(data.url, file);
+            console.log(data)
+            if (uploadResult.status === 200) {
+              console.log("파일 업로드 성공", uploadResult);
+            } else {
+              console.log("파일 업로드 실패");
+            }
+          } catch (error) {
+            console.log("업로드 실패", error);
+          }
         setImageUrl(result.assets[0].uri)
+        console.log(imageUrl)
     };
 
     return (
