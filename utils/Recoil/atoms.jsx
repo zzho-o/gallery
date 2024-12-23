@@ -5,6 +5,11 @@ export const atomImageUrl = atom({
     default: ""
 })
 
+export const atomImageList = atom({
+    key:"atomImageList",
+    default: []
+})
+
 export const atomGallery = atom({
     key:"Gallery",
     default: {}

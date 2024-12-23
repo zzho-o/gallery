@@ -7,9 +7,6 @@ import Gallery from './components/Gallery';
 export default function App() {
   return (
     <RecoilRoot>
-      <View style={styles.container}>
-        <Text>사진 갤러리</Text>
-      </View>
         <Gallery />
       <View style={styles.container}>
         <ImagePicker />
@@ -24,5 +21,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    width:"100%"
   },
 });
