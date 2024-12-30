@@ -7,8 +7,8 @@ import Gallery from './components/Gallery';
 export default function App() {
   return (
     <RecoilRoot>
-        <Gallery />
       <View style={styles.container}>
+      <Gallery />
         <ImagePicker />
       </View>
     </RecoilRoot>
